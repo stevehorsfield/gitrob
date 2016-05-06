@@ -29,6 +29,7 @@ module Gitrob
             :endpoint   => @options[:endpoint],
             :site       => @options[:site],
             :verify_ssl => @options[:verify_ssl],
+            :name       => @options[:title],
             :finished   => false
           )
           github_access_tokens.each do |access_token|
