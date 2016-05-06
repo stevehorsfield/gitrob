@@ -79,6 +79,11 @@ module Gitrob
            :type    => :boolean,
            :default => true,
            :desc    => "Verify or don't verify SSL connection (careful here)"
+    option :follow,
+           :type    => :boolean,
+           :default => true,
+           :desc    => "Expand search to include repositories of org. members"
+       
     def analyze(targets)
       accept_tos
       Gitrob::CLI::Commands::Analyze.start(targets, options)

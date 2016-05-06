@@ -6,7 +6,7 @@ module Gitrob
                   :owners,
                   :repositories
 
-      def initialize(logins, client_manager)
+      def initialize(logins, client_manager, follow = true)
         @logins                  = logins
         @client_manager          = client_manager
         @unknown_logins          = []
@@ -14,6 +14,7 @@ module Gitrob
         @repositories            = []
         @repositories_for_owners = {}
         @mutex                   = Mutex.new
+        @follow                  = follow
       end
 
       def gather_owners(thread_pool)
@@ -22,6 +23,7 @@ module Gitrob
           @owners << owner
           @repositories_for_owners[owner["login"]] = []
           next unless owner["type"] == "Organization"
+          next unless @follow
           get_members(owner, thread_pool) if owner["type"] == "Organization"
         end
         @owners = @owners.uniq { |o| o["login"] }
