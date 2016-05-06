@@ -29,7 +29,7 @@ module Gitrob
           def github_data_manager
             unless @github_data_manager
               @github_data_manager = Gitrob::Github::DataManager.new(
-                @targets, github_client_manager
+                @targets, github_client_manager, @options[:follow]
               )
             end
             @github_data_manager
