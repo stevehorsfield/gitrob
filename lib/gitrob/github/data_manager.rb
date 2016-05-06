@@ -6,7 +6,7 @@ module Gitrob
                   :owners,
                   :repositories
 
-      def initialize(logins, client_manager, follow = true)
+      def initialize(logins, client_manager, follow = true, includeForks = false)
         @logins                  = logins
         @client_manager          = client_manager
         @unknown_logins          = []
@@ -15,6 +15,7 @@ module Gitrob
         @repositories_for_owners = {}
         @mutex                   = Mutex.new
         @follow                  = follow
+        @includeForks            = includeForks
       end
 
       def gather_owners(thread_pool)
@@ -86,12 +87,13 @@ module Gitrob
       def get_repositories(owner)
         if owner["type"] == "Organization"
           github_client do |client|
-            client.repos.list(:org => owner["login"], :type => "sources")
+            client.repos.list(:org => owner["login"], :type => @includeForks ? "all" : "sources" )
           end
         else
           github_client do |client|
-            client.repos.list(
-              :user => owner["login"]).reject { |r| r["fork"] }
+            list = client.repos.list(:user => owner["login"])
+            return list if @includeForks
+            list.reject { |r| r["fork"] }
           end
         end
       end

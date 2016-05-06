@@ -83,6 +83,10 @@ module Gitrob
            :type    => :boolean,
            :default => true,
            :desc    => "Expand search to include repositories of org. members"
+    option :forks,
+           :type    => :boolean,
+           :default => false,
+           :desc    => "Include forked repositories in scan"
        
     def analyze(targets)
       accept_tos
