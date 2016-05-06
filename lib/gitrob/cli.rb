@@ -87,8 +87,12 @@ module Gitrob
            :type    => :boolean,
            :default => false,
            :desc    => "Include forked repositories in scan"
+    option :discover_targets,
+           :type    => :boolean,
+           :default => false,
+           :desc    => "Discover all users and organisations"
        
-    def analyze(targets)
+    def analyze(targets = [])
       accept_tos
       Gitrob::CLI::Commands::Analyze.start(targets, options)
     end
