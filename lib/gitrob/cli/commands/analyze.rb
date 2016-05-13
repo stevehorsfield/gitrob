@@ -11,7 +11,7 @@ module Gitrob
         def initialize(targets, options)
           Thread.abort_on_exception = true
           @options = options
-          @targets = targets.split(",").map(&:strip).uniq
+          @targets = targets == [] ? [] : targets.split(",").map(&:strip).uniq
           load_signatures!
           create_database_assessment
           gather_owners

@@ -5,6 +5,22 @@ module Gitrob
     end
   end
 
+  class QueryCLI < Thor
+
+    class_option :limit, :type => :numeric, :default => 0, :desc => "Limit number of assessments reported"
+    class_option :headers, :type => :boolean, :default => true, :desc => "Show column headers"
+    class_option :separator, :type => :string, :default => "\t", :desc => "Column separator"
+    
+    desc "list", "list previously run assessments"
+    option :unfinished, :type => :boolean, :default => false, :desc => "Include incomplete assessments"
+    option :completed, :type => :boolean, :default => true, :desc => "Include completed assessments"
+    option :id, :type => :numeric, :default => -1, :desc => "Query a specific assessment"
+    option :since, :type => :string, :default => nil, :desc => "Filter to recent assessments"
+    def list
+      Gitrob::CLI::Commands::Query::List.start(options)
+    end
+  end
+
   class CLI < Thor
     HELP_COMMANDS = %w(help h --help -h)
     package_name "Gitrob"
@@ -41,10 +57,15 @@ module Gitrob
                  :type    => :boolean,
                  :default => false,
                  :desc    => "Show or don't show debugging information"
+    class_option :quiet,
+                 :type    => :boolean,
+                 :default => false,
+                 :desc    => "Hide informational output"
 
     def initialize(*args)
       super
       self.class.enable_debugging if options[:debug]
+      self.class.enable_output unless options[:quiet]
       String.disable_colorization(!options[:color])
       return if help_command?
       banner
@@ -96,6 +117,9 @@ module Gitrob
       accept_tos
       Gitrob::CLI::Commands::Analyze.start(targets, options)
     end
+
+    desc "query SUBCOMMAND ...ARGS", "query assessments"
+    subcommand "query", QueryCLI
 
     desc "server", "Start web server"
     def server
@@ -200,9 +224,21 @@ module Gitrob
     end
 
     def self.output(string)
-      print string
+      print string if output_enabled?
     end
 
+    def self.enable_output
+      @output_enabled = true
+    end
+
+    def self.disable_output
+      @output_enabled = false
+    end
+
+    def self.output_enabled?
+      @output_enabled
+    end
+    
     def self.enable_debugging
       @debugging_enabled = true
     end
@@ -223,4 +259,5 @@ module Gitrob
       @config
     end
   end
+
 end
