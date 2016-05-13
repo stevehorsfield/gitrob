@@ -41,10 +41,15 @@ module Gitrob
                  :type    => :boolean,
                  :default => false,
                  :desc    => "Show or don't show debugging information"
+    class_option :quiet,
+                 :type    => :boolean,
+                 :default => false,
+                 :desc    => "Hide informational output"
 
     def initialize(*args)
       super
       self.class.enable_debugging if options[:debug]
+      self.class.enable_output unless options[:quiet]
       String.disable_colorization(!options[:color])
       return if help_command?
       banner
@@ -200,9 +205,21 @@ module Gitrob
     end
 
     def self.output(string)
-      print string
+      print string if output_enabled?
     end
 
+    def self.enable_output
+      @output_enabled = true
+    end
+
+    def self.disable_output
+      @output_enabled = false
+    end
+
+    def self.output_enabled?
+      @output_enabled
+    end
+    
     def self.enable_debugging
       @debugging_enabled = true
     end
