@@ -5,6 +5,22 @@ module Gitrob
     end
   end
 
+  class QueryCLI < Thor
+
+    class_option :limit, :type => :numeric, :default => 0, :desc => "Limit number of assessments reported"
+    class_option :headers, :type => :boolean, :default => true, :desc => "Show column headers"
+    class_option :separator, :type => :string, :default => "\t", :desc => "Column separator"
+    
+    desc "list", "list previously run assessments"
+    option :unfinished, :type => :boolean, :default => false, :desc => "Include incomplete assessments"
+    option :completed, :type => :boolean, :default => true, :desc => "Include completed assessments"
+    option :id, :type => :numeric, :default => -1, :desc => "Query a specific assessment"
+    option :since, :type => :string, :default => nil, :desc => "Filter to recent assessments"
+    def list
+      Gitrob::CLI::Commands::Query::List.start(options)
+    end
+  end
+
   class CLI < Thor
     HELP_COMMANDS = %w(help h --help -h)
     package_name "Gitrob"
@@ -101,6 +117,9 @@ module Gitrob
       accept_tos
       Gitrob::CLI::Commands::Analyze.start(targets, options)
     end
+
+    desc "query SUBCOMMAND ...ARGS", "query assessments"
+    subcommand "query", QueryCLI
 
     desc "server", "Start web server"
     def server
@@ -240,4 +259,5 @@ module Gitrob
       @config
     end
   end
+
 end
