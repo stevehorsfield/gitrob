@@ -4,84 +4,84 @@
     "type": "regex",
     "pattern": "\\A.*_rsa\\z",
     "caption": "Private SSH key",
-    "description": null
+    "description": "Filename ending with '_rsa'"
   },
   {
     "part": "filename",
     "type": "regex",
     "pattern": "\\A.*_dsa\\z",
     "caption": "Private SSH key",
-    "description": null
+    "description": "Filename ending with '_dsa'"
   },
   {
     "part": "filename",
     "type": "regex",
     "pattern": "\\A.*_ed25519\\z",
     "caption": "Private SSH key",
-    "description": null
+    "description": "Filename ending with '_ed25519'"
   },
   {
     "part": "filename",
     "type": "regex",
     "pattern": "\\A.*_ecdsa\\z",
     "caption": "Private SSH key",
-    "description": null
+    "description": "Filename ending with '_ecdsa'"
   },
   {
     "part": "path",
     "type": "regex",
     "pattern": "\\.?ssh/config\\z",
     "caption": "SSH configuration file",
-    "description": null
+    "description": "'.ssh/config' file"
   },
   {
     "part": "extension",
     "type": "match",
     "pattern": "pem",
     "caption": "Potential cryptographic private key",
-    "description": null
+    "description": "Filename extension 'pem'"
   },
   {
     "part": "extension",
     "type": "regex",
     "pattern": "\\Akey(pair)?\\z",
     "caption": "Potential cryptographic private key",
-    "description": null
+    "description": "Filename extension 'key' or 'keypair'"
   },
   {
     "part": "extension",
     "type": "match",
     "pattern": "pkcs12",
     "caption": "Potential cryptographic key bundle",
-    "description": null
+    "description": "Filename extension 'pkcs12'"
   },
   {
     "part": "extension",
     "type": "match",
     "pattern": "pfx",
     "caption": "Potential cryptographic key bundle",
-    "description": null
+    "description": "Filename extension 'pfx'"
   },
   {
     "part": "extension",
     "type": "match",
     "pattern": "p12",
     "caption": "Potential cryptographic key bundle",
-    "description": null
+    "description": "Filename extension 'p12'"
   },
   {
     "part": "extension",
     "type": "match",
     "pattern": "asc",
     "caption": "Potential cryptographic key bundle",
-    "description": null
+    "description": "Filename extension 'asc'"
   },
   {
     "part": "filename",
     "type": "match",
     "pattern": "otr.private_key",
     "caption": "Pidgin OTR private key",
-    "description": null
+    "description": "Filename 'otr.private_key'"
   },
   {
     "part": "filename",
@@ -305,13 +305,6 @@
     "type": "match",
     "pattern": "pcap",
     "caption": "Network traffic capture file",
-    "description": null
-  },
-  {
-    "part": "extension",
-    "type": "regex",
-    "pattern": "\\Asql(dump)?\\z",
-    "caption": "SQL dump file",
     "description": null
   },
   {
